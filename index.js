@@ -19,11 +19,12 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const PORT = process.env.PORT || 3001;
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   //alter: true la base de datos no se modifica al reiniciar-->force: true se modifica siempre
-  server.listen(3001, () => {
-    console.log('Listening on PORT 3001'); // eslint-disable-line no-console
+  server.listen(PORT, () => {
+    console.log(`Listening on PORT ${PORT}`); // eslint-disable-line no-console
   });
 });
