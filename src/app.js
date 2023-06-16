@@ -11,7 +11,12 @@ server.name = 'API'; //nombro al servidor "API", ya que trabajaremos con un endp
 require('./db.js');
 server.use(express.json()); //!IMPORTANTE: convierte la info a objeto json, para que se pueda leer y trabajar. ya lo hace la linea 14  15 y 16
 server.use(morgan('dev'));
-server.use(cors());
+// Configuración de CORS
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://dogs-front-end-ashy.vercel.app'],
+  optionsSuccessStatus: 200,
+};
+server.use(cors(corsOptions));
 server.use((req, res, next) => {
   //console.log("ESTOY PASANDO POR EL MIDDLEWARE"); //prueba que estamos recibiendo la request
   next();
