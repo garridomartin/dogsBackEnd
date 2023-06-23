@@ -5,15 +5,28 @@ const mainRouter = require('./routes/index.js');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT;
-
 const server = express();
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+//require('./passport'); ver si influye en algo comentar esto, estaba en el codigo del indio
+
 server.name = 'API'; //nombro al servidor "API", ya que trabajaremos con un endpoint de la api dogs
 require('./db.js');
 server.use(express.json()); //!IMPORTANTE: convierte la info a objeto json, para que se pueda leer y trabajar. ya lo hace la linea 14  15 y 16
 server.use(morgan('dev'));
 server.use(cors());
+//!CODIGO AUTENTICACION DE GOOGLE
+server.use(
+  cookieSession({
+    name: 'google-auth-session',
+    keys: ['key1', 'key2'],
+  })
+);
+server.use(passport.initialize());
+server.use(passport.session());
+//!CONTINUA EL CIRCUITO
 server.use((req, res, next) => {
-  //console.log("ESTOY PASANDO POR EL MIDDLEWARE"); //prueba que estamos recibiendo la request
+  console.log('ESTOY PASANDO POR EL MIDDLEWARE'); //prueba que estamos recibiendo la request
   next();
 });
 
